@@ -14,7 +14,7 @@ export class InputHandler {
         setTimeout(() => {
             this.inputService.updateFieldValue();
             this.setValue(this.inputService.value);
-            this.onModelChange(this.inputService.value);
+            if(this.onModelChange) this.onModelChange(this.inputService.value);
         }, 0);
     }
 
@@ -56,7 +56,7 @@ export class InputHandler {
         }
 
         this.setCursorPosition(event);
-        this.onModelChange(this.inputService.value);
+        if(this.onModelChange) this.onModelChange(this.inputService.value);
     }
 
     handleKeydown(event: any): void {
@@ -68,12 +68,12 @@ export class InputHandler {
 
             if (selectionRangeLength == this.inputService.rawValue.length || this.inputService.value == 0) {
                 this.setValue(null);
-                this.onModelChange(this.inputService.value);
+                if(this.onModelChange) this.onModelChange(this.inputService.value);
             }
 
             if (selectionRangeLength == 0 && !isNaN(this.inputService.value)) {
                 this.inputService.removeNumber(keyCode);
-                this.onModelChange(this.inputService.value);
+                if(this.onModelChange) this.onModelChange(this.inputService.value);
             }
         }
     }
@@ -99,14 +99,14 @@ export class InputHandler {
         }
 
         event.preventDefault();
-        this.onModelChange(this.inputService.value);
+        if(this.onModelChange) this.onModelChange(this.inputService.value);
     }
 
     handlePaste(event: any): void {
         setTimeout(() => {
             this.inputService.updateFieldValue();
             this.setValue(this.inputService.value);
-            this.onModelChange(this.inputService.value);
+            if(this.onModelChange) this.onModelChange(this.inputService.value);
         }, 1);
     }
 
@@ -115,7 +115,7 @@ export class InputHandler {
     }
 
     getOnModelChange(): Function {
-        return this.onModelChange;
+        return this.onModelChange ? this.onModelChange : null;
     }
 
     setOnModelChange(callbackFunction: Function): void {
